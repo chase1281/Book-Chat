@@ -1,0 +1,84 @@
+/* styles.css */
+body {
+    font-family: 'Georgia', serif;
+    background-image: url('https://source.unsplash.com/1600x900/?library'); /* 라이브러리 배경 이미지 */
+    background-size: cover;
+    background-attachment: fixed;
+    color: #4A3C31;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 253, 247, 0.95); /* 투명 배경 */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    border: 2px solid #C89F73; /* 따뜻한 색상 테두리 */
+}
+
+h1 {
+    text-align: center;
+    color: #663300;
+    font-family: 'Times New Roman', serif;
+}
+
+.input-section {
+    margin-bottom: 20px;
+}
+
+.label {
+    font-weight: bold;
+    color: #6B4226;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #8B4513;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Verdana', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #5A2E1A;
+}
+
+.button-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.response-section {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: rgba(245, 245, 240, 0.9);
+    border: 1px solid #C89F73;
+    border-radius: 5px;
+    color: #4A3C31;
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+}
+
+/* 추가적인 꾸미기 */
+hr {
+    border: 0;
+    height: 1px;
+    background: #C89F73;
+    margin: 20px 0;
+}
+
+a {
+    color: #663300;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #8B4513;
+}
