@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Chat 프로그램</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Book Chat 프로그램</h1>
+        <div class="input-section">
+            <label for="user-id">사용자 ID:</label>
+            <input type="text" id="user-id" placeholder="ID를 입력하세요">
+        </div>
+        <div class="button-section">
+            <button onclick="sendRequest('recommend')">장르 추천 요청</button>
+            <button onclick="sendRequest('custom')">맞춤형 추천 요청</button>
+            <button onclick="rateBook()">도서 평가</button>
+            <button onclick="exitProgram()">종료</button>
+        </div>
+        <div class="input-section">
+            <label for="genre-input">장르 입력:</label>
+            <input type="text" id="genre-input" placeholder="장르를 입력하세요">
+        </div>
+        <div class="input-section">
+            <label for="book-id">도서 ID:</label>
+            <input type="text" id="book-id" placeholder="도서 ID를 입력하세요">
+            <label for="rating">별점 (1-5):</label>
+            <input type="number" id="rating" min="1" max="5">
+        </div>
+        <div id="response" class="response-section"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
