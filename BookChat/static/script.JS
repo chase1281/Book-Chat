@@ -1,71 +1,97 @@
-// script.js
+document.addEventListener("DOMContentLoaded", () => {
+    const loginSection = document.getElementById("login-section");
+    const menuSection = document.getElementById("menu-section");
+    const outputSection = document.getElementById("output-section");
+    const userIdInput = document.getElementById("user-id");
+    const outputDiv = document.getElementById("output");
 
-// 서버와 통신하는 함수
-async function sendRequest(requestType) {
-    const userId = document.getElementById('user-id').value;
-    const genreInput = document.getElementById('genre-input').value;
+    const baseURL = "http://127.0.0.1:5555"; // 서버 주소
+    let userId = "";
 
-    // 서버로 보낼 데이터
-    let requestData = {
-        user_id: userId,
-        request_type: requestType,
-        genre: genreInput
+    const showSection = (section) => {
+        loginSection.classList.add("hidden");
+        menuSection.classList.add("hidden");
+        outputSection.classList.add("hidden");
+        section.classList.remove("hidden");
     };
 
-    try {
-        const response = await fetch('http://localhost:5555', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestData)
-        });
-
-        const data = await response.json();
-        displayResponse(data.message);
-    } catch (error) {
-        console.error('Error:', error);
-        displayResponse('서버와의 통신 오류 발생!');
-    }
-}
-
-// 도서 평가 기능
-async function rateBook() {
-    const userId = document.getElementById('user-id').value;
-    const bookId = document.getElementById('book-id').value;
-    const rating = document.getElementById('rating').value;
-
-    let requestData = {
-        user_id: userId,
-        request_type: 'rate',
-        book_id: bookId,
-        rating: rating
+    const sendRequest = async (requestData) => {
+        try {
+            const response = await fetch(baseURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestData)
+            });
+            return await response.json();
+        } catch (error) {
+            return { status: "error", message: "서버 연결 실패" };
+        }
     };
 
-    try {
-        const response = await fetch('http://localhost:5555', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestData)
-        });
+    document.getElementById("login-btn").addEventListener("click", () => {
+        userId = userIdInput.value.trim();
+        if (userId) {
+            showSection(menuSection);
+        } else {
+            alert("사용자 ID를 입력하세요.");
+        }
+    });
 
-        const data = await response.json();
-        displayResponse(data.message);
-    } catch (error) {
-        console.error('Error:', error);
-        displayResponse('서버와의 통신 오류 발생!');
-    }
-}
+    document.getElementById("genre-btn").addEventListener("click", async () => {
+        const genresResponse = await sendRequest({ request_type: "GET_GENRES" });
+        if (genresResponse.status === "success") {
+            const genres = genresResponse.data.join(", ");
+            const genre = prompt(`가능한 장르 목록: ${genres}\n추천받고 싶은 장르를 입력하세요:`);
+            if (genre) {
+                const booksResponse = await sendRequest({ request_type: "RECOMMEND", genre });
+                if (booksResponse.status === "success") {
+                    outputDiv.innerHTML = booksResponse.data.map(book => 
+                        `<p>ID: ${book.book_id}, 제목: ${book.title}, 저자: ${book.author}, 평가 점수: ${book.avg_rating}</p>`
+                    ).join("");
+                    showSection(outputSection);
+                } else {
+                    alert(booksResponse.message);
+                }
+            }
+        } else {
+            alert(genresResponse.message);
+        }
+    });
 
-// 프로그램 종료 기능
-function exitProgram() {
-    displayResponse('프로그램을 종료합니다.');
-}
+    document.getElementById("user-btn").addEventListener("click", async () => {
+        const userResponse = await sendRequest({ request_type: "RECOMMEND_USER", user_id: userId });
+        if (userResponse.status === "success") {
+            outputDiv.innerHTML = userResponse.data.map(book =>
+                `<p>ID: ${book.book_id}, 제목: ${book.title}, 저자: ${book.author}, 평가 점수: ${book.avg_rating}</p>`
+            ).join("");
+            showSection(outputSection);
+        } else {
+            alert(userResponse.message);
+        }
+    });
 
-// 서버 응답 출력 함수
-function displayResponse(message) {
-    const responseDiv = document.getElementById('response');
-    responseDiv.innerHTML = `<p>${message}</p>`;
-}
+    document.getElementById("rate-btn").addEventListener("click", async () => {
+        const bookId = prompt("평가할 도서의 ID를 입력하세요:");
+        const rating = prompt("도서에 대한 평가 점수 (1~5)를 입력하세요:");
+        if (bookId && rating) {
+            const rateResponse = await sendRequest({ 
+                request_type: "RATE_BOOK", 
+                book_id: parseInt(bookId), 
+                user_id: userId, 
+                rating: parseInt(rating) 
+            });
+            alert(rateResponse.message);
+        }
+    });
+
+    document.getElementById("exit-btn").addEventListener("click", () => {
+        alert("프로그램을 종료합니다.");
+        location.reload();
+    });
+
+    document.getElementById("back-btn").addEventListener("click", () => {
+        showSection(menuSection);
+    });
+});
