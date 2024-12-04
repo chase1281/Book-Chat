@@ -15,21 +15,21 @@ body {
 }
 
 .login-section {
-    display: flex;  /* Flexbox를 사용하여 아이디 입력 폼과 버튼을 중앙에 배치 */
+    display: flex;
     flex-direction: column;
-    align-items: center;  /* 수평 중앙 정렬 */
-    justify-content: center;  /* 수직 중앙 정렬 */
-    background-color: rgba(0, 0, 0, 0.5);  /* 배경을 어둡게 해서 가독성 향상 */
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 20px;
-    border-radius: 10px;  /* 둥근 모서리 */
+    border-radius: 10px;
     text-align: center;
 }
 
 .menu-section {
-    display: flex;  /* Flexbox로 버튼을 중앙 정렬 */
+    display: flex;
     flex-direction: column;
-    align-items: center;  /* 수평 중앙 정렬 */
-    justify-content: center;  /* 수직 중앙 정렬 */
+    align-items: center;
+    justify-content: center;
     text-align: center;
 }
 
@@ -72,11 +72,36 @@ input {
 
 .output-section {
     text-align: center;
-    color: #333;
+    color: hsl(0, 8%, 92%);
 }
 
 .menu-btn {
     width: 80%;
     max-width: 400px;
     margin: 10px auto;
+}
+
+.genre-btn {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+}
+
+.genre-btn:hover {
+    background-color: #0056b3;
+}
+
+#back-btn-from-genre, #back-btn {
+    margin-top: 20px;
+    background-color: #f44336;  /* Red color for back buttons */
+    color: white;
+}
+
+#back-btn-from-genre:hover, #back-btn:hover {
+    background-color: #d32f2f;
 }
