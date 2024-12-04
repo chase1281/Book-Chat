@@ -4,31 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Chat</title>
-    <!-- url_for을 사용하여 static 폴더에서 파일을 참조 -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 </head>
-<body>   
+<body>
     <div class="library-bg">
+        <!-- 로그인 화면 -->
         <div class="login-section" id="login-section">
             <h1>Book Chat 프로그램</h1>
             <p>사용자 ID를 입력하세요:</p>
             <input type="text" id="user-id" placeholder="사용자 ID">
             <button id="login-btn">로그인</button>
         </div>
+
+        <!-- 메뉴 화면 -->
         <div class="menu-section hidden" id="menu-section">
             <h2>명령어를 선택하세요:</h2>
-            <button class="menu-btn" id="genre-btn">도서 추천 요청 (특정 장르)</button>
-            <button class="menu-btn" id="user-btn">도서 추천 요청 (사용자 맞춤형)</button>
-            <button class="menu-btn" id="rate-btn">도서 평가</button>
+            <button class="menu-btn" id="genre-btn">추천 장르 목록</button>
+            <button class="menu-btn" id="recommend-genre-btn">사용자 맞춤형 도서 장르 추천</button>
             <button class="menu-btn" id="exit-btn">종료</button>
         </div>
+
+        <!-- 장르 선택 화면 -->
+        <div class="genre-request-section hidden" id="genre-request-section">
+            <h2>장르를 선택하세요:</h2>
+            <div id="genre-list"></div>
+            <button id="back-btn-from-genre">뒤로</button>
+        </div>
+
+        <!-- 도서 추천 화면 -->
         <div class="output-section hidden" id="output-section">
-            <h2>결과</h2>
+            <h2>추천 도서 목록</h2>
             <div id="output"></div>
             <button id="back-btn">뒤로</button>
         </div>
     </div>
-    <!-- url_for을 사용하여 static 폴더에서 script.js 파일을 참조 -->
+
+    <!-- Socket.IO 클라이언트 라이브러리 추가 -->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
